@@ -25,7 +25,18 @@ productRepo:=repository.NewProductRepository(db)
 productService:=service.NewProductService(productRepo)
 productHandler:=handler.NewProductHandler(productService)
 
+//////////////////// cart //////////////////////////////////////
+cartRepo := repository.NewCartRepository(db)
+cartService := service.NewCartService(cartRepo)
+cartHandler := handler.NewCartHandler(cartService)
+
+/////////////////// Wishlist ///////////////////////////////////
+wishlistRepo:=repository.NewWishlistRepository(db)
+wishlistService:=service.NewWishlistService(wishlistRepo)
+wishlistHandler:=handler.NewWishlistHandler(wishlistService)
+
 r:=gin.Default()
-routes.RegisterRoutes(r,userHandler,productHandler)
+r.Static("/uploads","./uploads")
+routes.RegisterRoutes(r,userHandler,productHandler,cartHandler,wishlistHandler)
 r.Run(":8080")
 }

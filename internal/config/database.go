@@ -29,6 +29,8 @@ func ConnectDB()*gorm.DB{
 		&models.Users{},
 		&models.Category{},
 		&models.Product{},
+		&models.Cart{}, 
+		&models.Wishlist{},
 	)
 	return db
 }

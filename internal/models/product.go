@@ -9,6 +9,7 @@ type Product struct {
 	Price       float64  `json:"price"`
 	Stock       int      `json:"stock"`
 	CategoryID  uint     `json:"category_id"`
+	ImageURL    string  `json:"image_url"`
 	Category    Category `gorm:"foreignKey:CategoryID" json:"category"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt time.Time	`json:"updated_at"`
