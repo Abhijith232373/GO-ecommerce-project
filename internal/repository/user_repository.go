@@ -2,7 +2,6 @@ package repository
 
 import (
 	"e-commerce/internal/models"
-
 	"gorm.io/gorm"
 )
 

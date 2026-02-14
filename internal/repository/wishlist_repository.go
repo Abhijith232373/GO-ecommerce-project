@@ -19,12 +19,10 @@ func (r *WishlistRepository)Add(w *models.Wishlist)error{
 
 func (r *WishlistRepository)GetByUser(userID uint)([]models.Wishlist,error){
 	var data []models.Wishlist
-
 	err:=r.DB.
 	Preload("Product").
 	Where("user_id=?",userID).
 	Find(&data).Error
-
 	return data,err
 }
 

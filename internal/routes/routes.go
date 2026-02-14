@@ -3,8 +3,6 @@ package routes
 import (
 	"e-commerce/internal/handler"
 	"e-commerce/internal/middleware"
-
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +12,7 @@ func RegisterRoutes(
 	productHandler *handler.ProductHandler,
 	cartHandler *handler.CartHandler,
 	wishlistHandler *handler.WishlistHandler,
+	orderHandler *handler.OrderHandler,
 	){
 
 
@@ -55,5 +54,11 @@ func RegisterRoutes(
 			api.POST("/wishlist",wishlistHandler.Add)
 			api.GET("/wishlist",wishlistHandler.Get)
 			api.DELETE("/wishlist/:id",wishlistHandler.Remove)
+
+///////////////////////// Order  ////////////////////////////////////////
+
+			api.POST("/orders",orderHandler.CreateOrder)
+			api.GET("/orders",orderHandler.GetOrders)
+			api.GET("/orders/:id",orderHandler.GetOrderByID)
 		}
 }

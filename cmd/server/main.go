@@ -35,8 +35,12 @@ wishlistRepo:=repository.NewWishlistRepository(db)
 wishlistService:=service.NewWishlistService(wishlistRepo)
 wishlistHandler:=handler.NewWishlistHandler(wishlistService)
 
+////////////////////// order //////////////////////////////////
+orderRepo:=repository.NewOrderRepository(db)
+orderService:=service.NewOrderService(orderRepo,cartRepo)
+orderHandler:=handler.NewOrderHandler(orderService)
 r:=gin.Default()
 r.Static("/uploads","./uploads")
-routes.RegisterRoutes(r,userHandler,productHandler,cartHandler,wishlistHandler)
+routes.RegisterRoutes(r,userHandler,productHandler,cartHandler,wishlistHandler,orderHandler)
 r.Run(":8080")
 }
