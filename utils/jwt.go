@@ -4,7 +4,6 @@ import (
 	"errors"
 	"os"
 	"time"
-
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -26,7 +25,7 @@ type AccessClaims struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateAccessToken(userId uint, email, role string) (string, error) {
+func GenerateAccessToken(userId uint, email, role string)(string, error) {
 	claims := AccessClaims{
 		UserId: userId,
 		Email:  email,

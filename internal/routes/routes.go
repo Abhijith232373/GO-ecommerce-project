@@ -55,7 +55,7 @@ func RegisterRoutes(
 			api.GET("/wishlist",wishlistHandler.Get)
 			api.DELETE("/wishlist/:id",wishlistHandler.Remove)
 
-///////////////////////// Order  ////////////////////////////////////////
+/////////////////////////  Order  ////////////////////////////////////////
 
 			api.POST("/orders",orderHandler.CreateOrder)
 			api.GET("/orders",orderHandler.GetOrders)

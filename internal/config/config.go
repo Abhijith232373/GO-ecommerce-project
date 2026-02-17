@@ -2,10 +2,9 @@ package config
 
 import (
 	"log"
-
 	"github.com/joho/godotenv"
 )
-
+// var  *gorm.DB
 func LoadEnv() {
 	err := godotenv.Load()
 	if err!=nil{

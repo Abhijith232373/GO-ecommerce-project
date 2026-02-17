@@ -7,7 +7,7 @@ type Order struct {
 	UserID      uint    `json:"user_id"`
 	TotalAmount float64 `json:"total_amount"`
 	Status      string  `gorm:"default:'pending'" json:"status"`
-
+	
 	FullName string `json:"full_name"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`

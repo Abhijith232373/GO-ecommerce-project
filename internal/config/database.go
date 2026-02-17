@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// var DB *gorm.DB
+var DB *gorm.DB
 
 func ConnectDB()*gorm.DB{
 	dsn:=fmt.Sprintf(
@@ -25,6 +25,8 @@ func ConnectDB()*gorm.DB{
 	if err!=nil{
 		log.Fatal("unable to connect to db:",err)
 	}
+
+	DB=db
 	db.AutoMigrate(
 		&models.Users{},
 		&models.Category{},
@@ -34,5 +36,5 @@ func ConnectDB()*gorm.DB{
 		&models.Order{},
 		&models.OrderItem{},
 	)
-	return db
+	return DB
 }
