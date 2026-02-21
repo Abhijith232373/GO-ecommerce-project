@@ -5,11 +5,9 @@ import (
 	"e-commerce/internal/handler"
 	"e-commerce/internal/repository"
 	"e-commerce/internal/routes"
-	"log"
-
-	// "e-commerce/internal/seed"
 	"e-commerce/internal/service"
-
+	// "html/template"
+	"log"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,12 +15,10 @@ func main() {
 config.LoadEnv()
 
 db:=config.ConnectDB()
-// seed.SeedProducts()
-config.ConnectDB()
+// config.ConnectDB()
 log.Println("Server started")
 
-//////////////////   USER    ?? ///////////////////////////////////
-
+//////////////////////   USER   ///////////////////////////////////
 userRepo:=repository.NewUserRepository(db)
 userService:=service.NewUserService(userRepo)
 userHandler:=handler.NewUserHandler(userService)
@@ -48,11 +44,18 @@ orderService:=service.NewOrderService(orderRepo,cartRepo)
 orderHandler:=handler.NewOrderHandler(orderService)
 
 
-adminHandler:=handler.NewAdminHandler()
+////////////////////// Admin ////////////////////////////////
+adminRepo :=repository.NewAdminRepository(db)
+adminService :=service.NewAdminService(adminRepo)
+adminHandler :=handler.NewAdminHandler(adminService,*productService)
+
+
 r:=gin.Default()
-r.LoadHTMLGlob("templates/**/*")
+	r.SetTrustedProxies(nil)
+	r.LoadHTMLGlob("templates/**/*.html")
+
 r.Static("/static","./static")
-r.Static("/uploads","./uploads")
+r.Static("/uploads","uploads")
 routes.RegisterRoutes(r,userHandler,productHandler,cartHandler,wishlistHandler,orderHandler)
 
 routes.AdminRoutes(r,adminHandler)

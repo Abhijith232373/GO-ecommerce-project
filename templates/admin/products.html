@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Management</title>
+    <link rel="stylesheet" href="/static/admin/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Home4U</h2>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/users">User Management</a>
+    <a class="active" href="/admin/products">Product Management</a>
+    <a href="/admin/logout">Logout</a>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+<div class="header">
+
+<h1>Products ({{len .Products}})</h1>
+
+<form method="GET" action="/admin/products">
+    <input 
+        type="text" 
+        name="search" 
+        placeholder="Search products..." 
+        value="{{.Search}}"
+    >
+    <button type="submit">Search</button>
+</form>
+
+<button onclick="openProductModal()" class="add-btn">
++ Add Product
+</button>
+
+</div>
+
+
+<div class="card">
+
+<table id="productTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Image</th>
+<th>Name</th>
+<th>Description</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+
+<tbody>
+
+{{range .Products}}
+
+<tr>
+
+<td>{{.ID}}</td>
+
+<td>
+<img src="/uploads/products/{{.ImageURL}}" class="product-img">
+</td>
+
+<td>{{.Name}}</td>
+<td>{{.Description}}</td>
+
+<td>₹{{.Price}}</td>
+
+<td>{{.Stock}}</td>
+
+
+<td>
+{{if .IsActive}}
+<span class="badge active">Active</span>
+{{else}}
+<span class="badge suspended">Disabled</span>
+{{end}}
+</td>
+
+
+<td>
+
+{{if .IsActive}}
+
+<form action="/admin/products/suspend/{{.ID}}" method="POST" style="display:inline;">
+    <button type="submit" class="btn suspend">Stockout</button>
+</form>
+
+{{else}}
+<form action="/admin/products/activate/{{.ID}}" method="POST" style="display:inline;">
+    <button type="submit" class="btn activate">Activate</button>
+</form>
+
+{{end}}
+
+
+<form method="POST" action="/admin/products/delete/{{.ID}}">
+<button class="action-btn delete">Delete</button>
+</form>
+
+</td>
+
+</tr>
+
+{{end}}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+</div>
+
+
+
+<!-- Add Product Modal -->
+
+<div id="productModal" class="modal">
+
+<div class="modal-content">
+
+<h3>Add Product</h3>
+
+<form action="/admin/products/add" method="POST" enctype="multipart/form-data">
+
+    <input type="text" name="name" placeholder="Product Name" required>
+
+    <input type="number" step="0.01" name="price" placeholder="Price" required>
+
+    <input type="number" name="stock" placeholder="Stock" required>
+
+    <textarea name="description" placeholder="Description" required></textarea>
+
+    <input type="file" name="image" required>
+
+    <button type="submit">Add Product</button>
+    <select name="category_id" required>
+    <option value="">Select Category</option>
+    <option value="1">Electronics</option>
+    <option value="2">Clothing</option>
+    <option value="3">Shoes</option>
+</select>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<script src="/static/js/admin.js"></script>
+
+</body>
+</html>

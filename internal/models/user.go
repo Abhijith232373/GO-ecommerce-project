@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"time"
+	"gorm.io/gorm"
+)
 
 type Users struct {
 	ID        uint  `gorm:"primaryKey"`
@@ -9,6 +12,8 @@ type Users struct {
 	Password  string `json:"password"`
 	Role      string `gorm:"default:user" json:"role"`
 	RefreshToken string `json:"-"`
+	IsActive bool
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 	CreatedAt time.Time
-	UpdatedAT time.Time
+	UpdatedAt time.Time
 }

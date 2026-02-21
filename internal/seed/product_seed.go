@@ -2,7 +2,6 @@ package seed
 
 import (
 	"log"
-
 	"e-commerce/internal/config"
 	"e-commerce/internal/models"
 )

@@ -41,3 +41,14 @@ func (r *ProductRepository)GetAll(
 	return  products,total,err
 }
 
+func (r *ProductRepository) ActivateProduct(id string) error {
+	return r.DB.Model(&models.Product{}).
+		Where("id = ?", id).
+		Update("is_active", true).Error
+}
+
+func (r *ProductRepository) SuspendProduct(id string) error {
+	return r.DB.Model(&models.Product{}).
+		Where("id = ?", id).
+		Update("is_active", false).Error
+}

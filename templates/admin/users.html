@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Management</title>
+    <link rel="stylesheet" href="/static/admin/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Home4U</h2>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a class="active" href="/admin/users">User Management</a>
+    <a href="/admin/products">Product Management</a>
+    <a href="/admin/logout">Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+<div class="header">
+    <h1>Users ({{len .Users}})</h1>
+
+    <input type="text" id="searchInput" placeholder="Search users...">
+
+    <button onclick="openModal()" class="add-btn">+ Add User</button>
+</div>
+
+<div class="card">
+
+<table id="usersTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{{range .Users}}
+
+<tr>
+
+<td>{{.ID}}</td>
+<td>{{.Name}}</td>
+<td>{{.Email}}</td>
+
+<td>
+{{if .IsActive}}
+<span class="badge active">Active</span>
+{{else}}
+<span class="badge suspended">Suspended</span>
+{{end}}
+</td>
+
+<td>
+
+{{if .IsActive}}
+
+<form method="POST" action="/admin/users/suspend/{{.ID}}">
+<button class="action-btn suspend">Suspend</button>
+</form>
+
+{{else}}
+
+<form method="POST" action="/admin/users/activate/{{.ID}}">
+<button class="action-btn activate">Activate</button>
+</form>
+
+{{end}}
+
+<form method="POST" action="/admin/users/delete/{{.ID}}">
+<button class="action-btn delete">Delete</button>
+</form>
+
+</td>
+
+</tr>
+
+{{end}}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+</div>
+
+<!-- Add User Modal -->
+<div id="userModal" class="modal">
+
+<div class="modal-content">
+
+<h3>Add New User</h3>
+
+<form method="POST" action="/admin/users/add">
+
+<input type="text" name="name" placeholder="Name" required>
+
+<input type="email" name="email" placeholder="Email" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<button type="submit" class="add-btn">Add User</button>
+
+<button type="button" onclick="closeModal()">Cancel</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script src="/static/js/admin.js"></script>
+
+</body>
+</html>
